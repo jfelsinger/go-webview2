@@ -220,6 +220,180 @@ func (i *ICoreWebView2) GetContainsFullScreenElement() (bool, error) {
 	return result, nil
 }
 
+func (i *ICoreWebView2) GetSource() (string, error) {
+	// Create *uint16 to hold result
+	var _uri *uint16
+
+	_, _, err := i.vtbl.GetSource.Call(
+		uintptr(unsafe.Pointer(i)),
+		uintptr(unsafe.Pointer(&_uri)),
+	)
+	if err != windows.ERROR_SUCCESS {
+		return "", err
+	}
+	// Get result and cleanup
+	uri := UTF16PtrToString(_uri)
+	CoTaskMemFree(unsafe.Pointer(_uri))
+	return uri, err
+}
+
+func (i *ICoreWebView2) GetDocumentTitle() (string, error) {
+	// Create *uint16 to hold result
+	var _title *uint16
+
+	_, _, err := i.vtbl.GetDocumentTitle.Call(
+		uintptr(unsafe.Pointer(i)),
+		uintptr(unsafe.Pointer(&_title)),
+	)
+	if err != windows.ERROR_SUCCESS {
+		return "", err
+	}
+	// Get result and cleanup
+	title := UTF16PtrToString(_title)
+	CoTaskMemFree(unsafe.Pointer(_title))
+	return title, nil
+}
+
+func (i *ICoreWebView2) GetCanGoBack() (bool, error) {
+	// Create int32 to hold bool result
+	var _canGoBack int32
+
+	_, _, err := i.vtbl.GetCanGoBack.Call(
+		uintptr(unsafe.Pointer(i)),
+		uintptr(unsafe.Pointer(&_canGoBack)),
+	)
+	if err != windows.ERROR_SUCCESS {
+		return false, err
+	}
+	// Get result and cleanup
+	canGoBack := _canGoBack != 0
+	return canGoBack, nil
+}
+
+func (i *ICoreWebView2) GetCanGoForward() (bool, error) {
+	// Create int32 to hold bool result
+	var _canGoForward int32
+
+	_, _, err := i.vtbl.GetCanGoForward.Call(
+		uintptr(unsafe.Pointer(i)),
+		uintptr(unsafe.Pointer(&_canGoForward)),
+	)
+	if err != windows.ERROR_SUCCESS {
+		return false, err
+	}
+	// Get result and cleanup
+	canGoForward := _canGoForward != 0
+	return canGoForward, nil
+}
+
+func (i *ICoreWebView2) GoBack() error {
+
+	_, _, err := i.vtbl.GoBack.Call(
+		uintptr(unsafe.Pointer(i)),
+	)
+	fmt.Println("GoBack#: ", err)
+	if err != windows.ERROR_SUCCESS {
+		return err
+	}
+	return nil
+}
+
+func (i *ICoreWebView2) GoForward() error {
+
+	_, _, err := i.vtbl.GoForward.Call(
+		uintptr(unsafe.Pointer(i)),
+	)
+	if err != windows.ERROR_SUCCESS {
+		return err
+	}
+	return nil
+}
+
+// func (i *ICoreWebView2) GetSource() (string, error) {
+// 	var err error
+// 	var result string
+// 	r1, r2, err1 := i.vtbl.GetSource.Call(
+// 		uintptr(unsafe.Pointer(i)),
+// 		uintptr(unsafe.Pointer(&result)),
+// 	)
+// 	err = err1
+// 	fmt.Println("GetSource() - r1, r2: ", r1, r2)
+// 	fmt.Println("GetSource() - ", result, err)
+// 	if err != windows.ERROR_SUCCESS {
+// 		return "", err
+// 	}
+// 	return result, nil
+// }
+//
+// func (i *ICoreWebView2) GetDocumentTitle() (string, error) {
+// 	var err error
+// 	var result string
+// 	r1, r2, err1 := i.vtbl.GetDocumentTitle.Call(
+// 		uintptr(unsafe.Pointer(i)),
+// 		uintptr(unsafe.Pointer(&result)),
+// 	)
+// 	err = err1
+// 	fmt.Println("GetDocumentTitle() - r1, r2: ", r1, r2)
+// 	fmt.Println("GetDocumentTitle() - r1, r2: ", unsafe.Pointer(r1), r2)
+// 	fmt.Println("GetDocumentTitle() - ", result, err)
+// 	if err != windows.ERROR_SUCCESS {
+// 		return "", err
+// 	}
+// 	return result, nil
+// }
+//
+// func (i *ICoreWebView2) GetCanGoBack() (bool, error) {
+// 	var err error
+// 	var result bool
+// 	_, _, err = i.vtbl.GetCanGoBack.Call(
+// 		uintptr(unsafe.Pointer(i)),
+// 		uintptr(unsafe.Pointer(&result)),
+// 	)
+// 	fmt.Println("GetCanGoBack() - ", result, err)
+// 	if err != windows.ERROR_SUCCESS {
+// 		return false, err
+// 	}
+// 	return result, nil
+// }
+//
+// func (i *ICoreWebView2) GetCanGoForward() (bool, error) {
+// 	var err error
+// 	var result bool
+// 	_, _, err = i.vtbl.GetCanGoForward.Call(
+// 		uintptr(unsafe.Pointer(i)),
+// 		uintptr(unsafe.Pointer(&result)),
+// 	)
+// 	fmt.Println("GetCanGoForward() - ", result, err)
+// 	if err != windows.ERROR_SUCCESS {
+// 		return false, err
+// 	}
+// 	return result, nil
+// }
+//
+// func (i *ICoreWebView2) GoBack() error {
+// 	var err error
+// 	_, _, err = i.vtbl.GoBack.Call(
+// 		uintptr(unsafe.Pointer(i)),
+// 	)
+// 	fmt.Println("GoBack() - ", err)
+// 	if err != windows.ERROR_SUCCESS {
+// 		return err
+// 	}
+// 	return nil
+// }
+//
+// func (i *ICoreWebView2) GoForward() error {
+// 	var err error
+// 	_, _, err = i.vtbl.GoBack.Call(
+// 		uintptr(unsafe.Pointer(i)),
+// 	)
+// 	fmt.Println("GoForward() - ", err)
+// 	if err != windows.ERROR_SUCCESS {
+// 		return err
+// 	}
+// 	return nil
+// }
+
 // ICoreWebView2Environment
 
 type iCoreWebView2EnvironmentVtbl struct {

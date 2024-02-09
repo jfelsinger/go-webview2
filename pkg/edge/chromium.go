@@ -194,6 +194,30 @@ func (e *Chromium) Navigate(url string) {
 	)
 }
 
+func (e *Chromium) GetSource() (string, error) {
+	return e.webview.GetSource()
+}
+
+func (e *Chromium) GetDocumentTitle() (string, error) {
+	return e.webview.GetDocumentTitle()
+}
+
+func (e *Chromium) GetCanGoBack() (bool, error) {
+	return e.webview.GetCanGoBack()
+}
+
+func (e *Chromium) GetCanGoForward() (bool, error) {
+	return e.webview.GetCanGoForward()
+}
+
+func (e *Chromium) GoBack() error {
+	return e.webview.GoBack()
+}
+
+func (e *Chromium) GoForward() error {
+	return e.webview.GoForward()
+}
+
 func (e *Chromium) NavigateToString(content string) {
 	e.webview.vtbl.NavigateToString.Call(
 		uintptr(unsafe.Pointer(e.webview)),
